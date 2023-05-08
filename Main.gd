@@ -6,12 +6,15 @@ var score
 
 
 func game_over():
+	$Music.stop()
+	$DeathSound.play()
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
 
 
 func new_game():
+	$Music.play()
 	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
@@ -19,6 +22,7 @@ func new_game():
 	$HUD.show_message("Get Ready")
 	# Get all nodes in group 'mobs' and call the function
 	# 'queue_free' on them
+	# This removes mobs from the previous game
 	get_tree().call_group("mobs", "queue_free")
 
 
