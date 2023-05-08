@@ -8,16 +8,22 @@ var score
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$HUD.show_game_over()
 
 
 func new_game():
 	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready")
+	# Get all nodes in group 'mobs' and call the function
+	# 'queue_free' on them
+	get_tree().call_group("mobs", "queue_free")
 
 
 func _ready():
-#	new_game()
+	# No-op
 	pass
 
 
@@ -49,6 +55,7 @@ func _on_mob_timer_timeout():
 
 func _on_score_timer_timeout():
 	score += 1
+	$HUD.update_score(score)
 
 
 func _on_start_timer_timeout():
